@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+from datetime import datetime
+from pprint import pprint
+
+from cointrack import utils, coingecko, coinsph, moneybees
+
+
+def main():
+    print(f'Getting Bitcoin market rates as of: {datetime.now()}\n')
+    print('====================')
+    print('CoinGecko Rates')
+    print('====================')
+    html = utils.render_target_url(
+        coingecko.TARGET_URL,
+        validator=coingecko.validator,
+        is_js=False)
+    rates = coingecko.get_rates(html)
+    pprint(rates[0])
+
+    print('====================')
+    print('Coins.ph Rates')
+    print('====================')
+    html = utils.render_target_url(
+        coinsph.TARGET_URL,
+        validator=coinsph.validator,
+        is_js=False)
+    rates = coinsph.get_rates(html)
+    pprint(rates[0])
+
+    print('====================')
+    print('Moneybees Rates')
+    print('====================')
+    html = utils.render_target_url(
+        moneybees.TARGET_URL,
+        validator=moneybees.validator,
+        is_js=True)
+    rates = moneybees.get_rates(html)
+    pprint(rates[0])
+
+
+if __name__ == '__main__':
+    main()
